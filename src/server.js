@@ -8,7 +8,7 @@ import httpProxy from 'http-proxy';
 import path from 'path';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import Html from './helpers/Html';
+import { HTML } from 'containers';
 import PrettyError from 'pretty-error';
 import { Server } from 'http';
 import SocketIo from 'socket.io';
@@ -65,7 +65,7 @@ app.use((req, res) => {
     );
 
     function hydrateOnClient(component) {
-        res.send(DOCTYPE + renderToString(<Html {...{ assets, store, component }} />));
+        res.send(DOCTYPE + renderToString(<HTML {...{ assets, store, component }} />));
     }
 
     const routingSuccess = ({ routes }) => () => {
