@@ -42,10 +42,4 @@ describe('InfoBar', () => {
     const text = dom.getElementsByTagName('button')[0].textContent;
     expect(text).to.be.a('string');
   });
-
-  it('should render the correct className', () => {
-    const styles = require('components/InfoBar/InfoBar.scss');
-    expect(styles.infoBar).to.be.a('string');
-    expect(dom.className).to.include(styles.infoBar);
-  });
 });

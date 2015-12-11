@@ -44,12 +44,11 @@ export default class Widgets extends Component {
     if (loading) {
       refreshClassName += ' fa-spin';
     }
-    const styles = require('./Widgets.scss');
     return (
-      <div className={styles.widgets + ' container'}>
+      <div className={' container'}>
         <h1>
           Widgets
-          <button className={styles.refreshBtn + ' btn btn-success'} onClick={load}>
+          <button className={' btn btn-success'} onClick={load}>
             <i className={refreshClassName}/> {' '} Reload Widgets
           </button>
         </h1>
@@ -73,11 +72,11 @@ export default class Widgets extends Component {
         <table className="table table-striped">
           <thead>
           <tr>
-            <th className={styles.idCol}>ID</th>
-            <th className={styles.colorCol}>Color</th>
-            <th className={styles.sprocketsCol}>Sprockets</th>
-            <th className={styles.ownerCol}>Owner</th>
-            <th className={styles.buttonCol}></th>
+            <th>ID</th>
+            <th>Color</th>
+            <th>Sprockets</th>
+            <th>Owner</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -85,11 +84,11 @@ export default class Widgets extends Component {
             widgets.map((widget) => editing[widget.id] ?
               <WidgetForm formKey={String(widget.id)} key={String(widget.id)} initialValues={widget}/> :
               <tr key={widget.id}>
-                <td className={styles.idCol}>{widget.id}</td>
-                <td className={styles.colorCol}>{widget.color}</td>
-                <td className={styles.sprocketsCol}>{widget.sprocketCount}</td>
-                <td className={styles.ownerCol}>{widget.owner}</td>
-                <td className={styles.buttonCol}>
+                <td>{widget.id}</td>
+                <td>{widget.color}</td>
+                <td>{widget.sprocketCount}</td>
+                <td>{widget.owner}</td>
+                <td>
                   <button className="btn btn-primary" onClick={handleEdit(widget)}>
                     <i className="fa fa-pencil"/> Edit
                   </button>
@@ -102,4 +101,3 @@ export default class Widgets extends Component {
     );
   }
 }
-
