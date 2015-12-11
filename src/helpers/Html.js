@@ -1,53 +1,24 @@
-import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom/server';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import DocumentMeta from 'react-document-meta';
 
-/**
- * Wrapper component containing HTML metadata and boilerplate tags.
- * Used in server-side code only to wrap the string output of the
- * rendered route component.
- *
- * The only thing this component doesn't (and can't) include is the
- * HTML doctype declaration, which is added to the rendered output
- * by the server.js file.
- */
-export default class Html extends Component {
-  static propTypes = {
-    assets: PropTypes.object,
-    component: PropTypes.node,
-    store: PropTypes.object
-  }
-
-  render() {
-    const {assets, component, store} = this.props;
-    const content = component ? ReactDOM.renderToString(component) : '';
-
-    return (
-      <html lang="en-us">
+export default ({ assets: { styles, javascript }, component, store }) => (
+    <html lang="ru">
         <head>
-          {DocumentMeta.renderAsReact()}
+            {DocumentMeta.renderAsReact()}
 
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          {/* styles (will be present only in production with webpack extract text plugin) */}
-          {Object.keys(assets.styles).map((style, key) =>
-            <link href={assets.styles[style]} key={key} media="screen, projection"
-                  rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          )}
+            <link rel="shortcut icon" href="/favicon.ico" />
+            <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-          {/* (will be present only in development mode) */}
-          {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
-          {/* can smoothen the initial style flash (flicker) on page load in development mode. */}
-          {/* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */}
-          { Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{__html: require('../theme/bootstrap.config.js') + require('../containers/App/App.scss')._style}}/> : null }
+            {Object.keys(styles).map((style, key, arr) =>
+                <link href={arr[style]} {...{ key }} rel="stylesheet" />
+            )}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
-          <script src={assets.javascript.main} charSet="UTF-8"/>
+            <main id="root" dangerouslySetInnerHTML={{ __html: component ? renderToString(component) : '' }} />
+            <script dangerouslySetInnerHTML={{ __html: `window.__data=${serialize(store.getState())};` }} />
+            <script src={javascript.main} />
         </body>
-      </html>
-    );
-  }
-}
+    </html>
+);

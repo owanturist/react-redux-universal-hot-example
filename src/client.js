@@ -14,7 +14,7 @@ import getRoutes from './routes';
 
 const client = new ApiClient();
 
-const rootElement = document.getElementById('content');
+const rootElement = document.getElementById('root');
 const store = createStore(client, window.__data);
 const routes = getRoutes(store);
 const Component = () => <ReduxRouter {...{ routes }} />;
