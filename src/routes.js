@@ -1,6 +1,6 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
+import { isLoaded as isAuthLoaded, load as loadAuth } from 'reducers/auth';
 import {
     App,
     Chat,
@@ -16,7 +16,7 @@ import {
 export default ({ dispatch, getState }) => {
     const requireLogin = (nextState, replaceState, callback) => {
         function checkAuth() {
-            const { auth: { user } } = getState();
+            const { auth: { user } = {} } = getState();
 
             if (!user) {
                 replaceState(null, '/login');

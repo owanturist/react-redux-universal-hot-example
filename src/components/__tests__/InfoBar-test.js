@@ -4,7 +4,7 @@ import {renderIntoDocument} from 'react-addons-test-utils';
 import { expect} from 'chai';
 import { InfoBar } from 'components';
 import { Provider } from 'react-redux';
-import createStore from 'redux/create';
+import makeStore from 'store';
 import ApiClient from 'helpers/ApiClient';
 const client = new ApiClient();
 
@@ -21,7 +21,7 @@ describe('InfoBar', () => {
     }
   };
 
-  const store = createStore(client, mockStore);
+  const store = makeStore(client, mockStore);
   const renderer = renderIntoDocument(
     <Provider store={store} key="provider">
       <InfoBar/>
