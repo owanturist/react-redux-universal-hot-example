@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import clientMiddleware from './middleware/clientMiddleware';
-import transitionMiddleware from './middleware/transitionMiddleware';
+import { transitionMiddleware, clientMiddleware } from 'middleware';
 import reducer from './modules/reducer';
 import routes from '../routes';
 
