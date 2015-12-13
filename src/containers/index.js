@@ -1,4 +1,5 @@
 export App from './App/App';
+export DevTools from './DevTools/DevTools';
 export Chat from './Chat/Chat';
 export Home from './Home/Home';
 export HTML from './HTML/HTML';

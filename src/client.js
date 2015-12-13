@@ -10,7 +10,7 @@ import { ReduxRouter } from 'redux-router';
 
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
-import getRoutes from './routes';
+import getRoutes from 'routes';
 
 const client = new ApiClient();
 

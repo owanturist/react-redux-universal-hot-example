@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import DocumentMeta from 'react-document-meta';
 import {connect} from 'react-redux';
-import * as widgetActions from 'redux/modules/widgets';
-import {isLoaded, load as loadWidgets} from 'redux/modules/widgets';
+import * as widgetActions from 'reducers/widgets';
+import {isLoaded, load as loadWidgets} from 'reducers/widgets';
 import {initializeWithKey} from 'redux-form';
 import connectData from 'helpers/connectData';
 import { WidgetForm } from 'components';

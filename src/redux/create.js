@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { transitionMiddleware, clientMiddleware } from 'middleware';
-import reducer from './modules/reducer';
-import routes from '../routes';
+import reducer from 'reducers';
+import routes from 'routes';
 
 const { reduxReactRouter } = __CLIENT__ && !__TEST__
   ? require('redux-router')
@@ -29,7 +29,7 @@ const getRoutes = () => {
 
 function getDevUtils(enableDevTools) {
     const { persistState } = require('redux-devtools');
-    const DevTools = require('../containers/DevTools/DevTools');
+    const { DevTools } = require('containers');
 
     return enableDevTools ? [
         window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument(),
@@ -47,7 +47,7 @@ export default (client, data) => {
     )(createStore)(reducer, data);
 
     if (__DEVELOPMENT__ && module.hot) {
-        module.hot.accept('./modules/reducer', () => {
+        module.hot.accept('../reducers', () => {
             store.replaceReducer(reducer);
         });
     }
