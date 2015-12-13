@@ -11,8 +11,8 @@ export default ({ assets: { styles, javascript }, component, store }) => (
             <link rel="shortcut icon" href="/favicon.ico" />
             <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-            {Object.keys(styles).map((style, key, arr) =>
-                <link href={arr[style]} {...{ key }} rel="stylesheet" />
+            {Object.keys(styles).map(key =>
+                <link href={styles[key]} {...{ key }} rel="stylesheet" />
             )}
         </head>
         <body>

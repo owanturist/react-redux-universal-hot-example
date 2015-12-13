@@ -8,6 +8,8 @@ import { InfoBar } from 'components';
 import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
+import styles from './App.css';
+import cssModules from 'react-css-modules';
 
 function fetchData(getState, dispatch) {
   const promises = [];
@@ -24,6 +26,7 @@ function fetchData(getState, dispatch) {
 @connect(
   state => ({user: state.auth.user}),
   {logout, pushState})
+@cssModules(styles)
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -55,7 +58,7 @@ export default class App extends Component {
     const {user} = this.props;
 
     return (
-      <div>
+      <div styleName='root'>
         <DocumentMeta {...config.app}/>
         <div fixedTop toggleNavKey={0}>
           <div>
