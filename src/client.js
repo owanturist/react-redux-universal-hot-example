@@ -9,13 +9,13 @@ import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 
 import ApiClient from './helpers/ApiClient';
-import createStore from './redux/create';
+import makeStore from 'store';
 import getRoutes from 'routes';
 
 const client = new ApiClient();
 
 const rootElement = document.getElementById('root');
-const store = createStore(client, window.__data);
+const store = makeStore(client, window.__data);
 const routes = getRoutes(store);
 const Component = () => <ReduxRouter {...{ routes }} />;
 

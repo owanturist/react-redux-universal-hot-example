@@ -6,7 +6,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
-import createStore from './redux/create';
+import makeStore from 'store';
 import ApiClient from './helpers/ApiClient';
 import { HTML } from 'containers';
 import PrettyError from 'pretty-error';
@@ -56,7 +56,7 @@ proxy.on('error', (error, req, res) => {
 
 app.use((req, res) => {
     const client = new ApiClient(req);
-    const store = createStore(client);
+    const store = makeStore(client);
     const assets = webpackIsomorphicTools.assets();
     const storeProvider = (
         <Provider {...{ store }} key="provider">
