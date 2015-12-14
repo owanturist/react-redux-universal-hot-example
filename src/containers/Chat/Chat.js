@@ -1,8 +1,13 @@
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
+import { messageReceived } from 'actions';
 
 @connect(
-  state => ({user: state.auth.user})
+  state => ({
+      user: state.auth.user,
+      chat: state.chat
+  })
 )
 export default class Chat extends Component {
 
@@ -11,49 +16,44 @@ export default class Chat extends Component {
   };
 
   state = {
-    message: '',
     messages: []
   };
 
   componentDidMount() {
-    if (socket && !this.onMsgListener) {
-      this.onMsgListener = socket.on('msg', this.onMessageReceived);
+      const { dispatch } = this.props;
 
-      setTimeout(() => {
+    if (socket && !this.onMsgListener) {
+      this.onMsgListener = socket.on('msg', data => dispatch(messageReceived(data)));
+
         socket.emit('history', {offset: 0, length: 100});
-      }, 100);
     }
   }
 
   componentWillUnmount() {
+      console.log('unm');
     if (socket && this.onMsgListener) {
+      console.log('unm:after');
       socket.removeListener('on', this.onMsgListener);
       this.onMsgListener = null;
     }
   }
 
-  onMessageReceived = (data) => {
-    const messages = this.state.messages;
-    messages.push(data);
-    this.setState({messages});
-  }
-
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const msg = this.state.message;
-
-    this.setState({message: ''});
+    const { message } = this.refs;
 
     socket.emit('msg', {
       from: this.props.user.name,
-      text: msg
+      text: message.value
     });
+
+    message.value = '';
   }
 
   render() {
 
-    const {user} = this.props;
+    const {user, chat} = this.props;
 
     return (
       <div className={' container'}>
@@ -62,18 +62,13 @@ export default class Chat extends Component {
         {user &&
         <div>
           <ul>
-          {this.state.messages.map((msg) => {
-            return <li key={`chat.msg.${msg.id}`}>{msg.from}: {msg.text}</li>;
-          })}
+          {chat.map((msg, key) =>
+             <li key={key}>{msg.from}: {msg.text}</li>
+          )}
           </ul>
           <form className="login-form" onSubmit={this.handleSubmit}>
-            <input type="text" ref="message" placeholder="Enter your message"
-             value={this.state.message}
-             onChange={(event) => {
-               this.setState({message: event.target.value});
-             }
-            }/>
-            <button className="btn" onClick={this.handleSubmit}>Send</button>
+            <input type="text" ref="message" placeholder="Enter your message"/>
+            <button type="submit">Send</button>
           </form>
         </div>
         }

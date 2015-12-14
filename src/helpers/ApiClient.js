@@ -1,16 +1,17 @@
 import superagent from 'superagent';
-import config from '../config';
+import { apiHost, apiPort } from '../config';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
-function formatUrl(path) {
-  const adjustedPath = path[0] !== '/' ? '/' + path : path;
-  if (__SERVER__) {
-    // Prepend host and port of the API server to the path.
-    return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
-  }
-  // Prepend `/api` to relative URL, to proxy to API server.
-  return '/api' + adjustedPath;
+function formatUrl(apiPath = '') {
+    // remove all matched '/' from the start
+    const adjustedPath = apiPath.replace(/^\/*/, '');
+
+    return __SERVER__
+        // prepend host and port of the API server to the path.
+        ? `http://${apiHost}:${apiPort}/${adjustedPath}`
+        // prepend `/api` to relative URL, to proxy to API server.
+        : `/api/${adjustedPath}`;
 }
 
 /*
