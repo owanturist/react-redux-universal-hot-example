@@ -30,9 +30,7 @@ export default class Chat extends Component {
   }
 
   componentWillUnmount() {
-      console.log('unm');
     if (socket && this.onMsgListener) {
-      console.log('unm:after');
       socket.removeListener('on', this.onMsgListener);
       this.onMsgListener = null;
     }

@@ -7,12 +7,17 @@
   *
   * 3. Call fetch data methods and gather promises
   */
-export default (components, getState, dispatch, location, params, deferred) => {
-  const methodName = deferred ? 'fetchDataDeferred' : 'fetchData';
+export default function getDataDependencies(components, getState, dispatch, location, params, isDeferred) {
+    const methodName = isDeferred ? 'fetchDataDeferred' : 'fetchData';
 
-  return components
-    .filter((component) => component && component[methodName]) // 1
-    .map((component) => component[methodName]) // 2
-    .map(fetchData =>
-      fetchData(getState, dispatch, location, params)); // 3
-};
+    return components.reduce((acc, component) => {
+        if (component && component[methodName]) {
+            return [
+                ...acc,
+                component[methodName](getState, dispatch, location, params)
+            ];
+        }
+
+        return acc;
+    }, []);
+}
