@@ -4,11 +4,11 @@ import DocumentMeta from 'react-document-meta';
 import * as authActions from 'reducers/auth';
 import config from '../../config';
 
-import { login as loginFetch } from 'actions/auth';
+import { login } from 'actions/auth';
 
 @connect(
   state => ({user: state.auth.user}),
-  {...authActions, loginFetch})
+  {...authActions, login})
 export default class Login extends Component {
   static propTypes = {
     user: PropTypes.object,
@@ -21,13 +21,6 @@ export default class Login extends Component {
     event.preventDefault();
     const input = this.refs.username;
     this.props.login(input.value);
-    input.value = '';
-  }
-
-  handleSubmitFetch = (event) => {
-    event.preventDefault();
-    const input = this.refs.username;
-    this.props.loginFetch(input.value);
     input.value = '';
   }
 
@@ -45,8 +38,6 @@ export default class Login extends Component {
               <input type="text" ref="username" placeholder="Enter a username" className="form-control"/>
             </div>
             <button className="btn btn-success" onClick={this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
-            </button>
-            <button className="btn btn-success" onClick={this.handleSubmitFetch}><i className="fa fa-sign-in"/>{' '}Log In Fetch
             </button>
           </form>
           <p>This will "log you in" as this user, storing the username in the session of the API server.</p>
