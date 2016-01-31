@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import * as authActions from 'reducers/auth';
+import { logout } from 'actions/auth';
 
 @connect(
     state => ({user: state.auth.user}),
-    authActions)
+    { logout })
 export default
 class LoginSuccess extends Component {
   static propTypes = {

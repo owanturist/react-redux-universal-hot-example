@@ -1,11 +1,11 @@
-import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL } from 'constants/auth';
+import {
+    LOGIN, LOGIN_SUCCESS, LOGIN_FAIL,
+    LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL
+    } from 'constants/auth';
 
 const LOAD = 'redux-example/auth/LOAD';
 const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
-const LOGOUT = 'redux-example/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
 
 const initialState = {
     loaded: false
@@ -80,12 +80,5 @@ export function load() {
     return {
         type: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
         payload: client => client.get('/loadAuth')
-    };
-}
-
-export function logout() {
-    return {
-        type: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-        payload: client => client.get('/logout')
     };
 }

@@ -27,13 +27,13 @@ export function failureHandler(response) {
     throw error;
 }
 
-export default function request(url, { body = {}, ...params } = {}, data = body) {
+export default function request(url, { body, ...params } = {}, data = body) {
     const defaults = {
         credentials: 'same-origin',
         headers: new Headers({
             'Content-Type': 'application/json'
         }),
-        body: JSON.stringify(data)
+        body: data && JSON.stringify(data)
     };
 
     return fetch(formatUrl(url), { ...defaults, ...params })
