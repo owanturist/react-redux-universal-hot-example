@@ -4,37 +4,7 @@ import DocumentMeta from 'react-document-meta';
 import * as authActions from 'reducers/auth';
 import config from '../../config';
 
-import fetch from 'isomorphic-fetch';
-
-const LOGIN = 'redux-example/auth/LOGIN';
-const LOGIN_SUCCESS = 'redux-example/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
-
-function formatUrl(apiPath = '') {
-    // remove all matched '/' from the start
-    const adjustedPath = apiPath.replace(/^\/*/, '');
-
-    return __SERVER__
-        // prepend host and port of the API server to the path.
-        ? `http://${config.apiHost}:${config.apiPort}/${adjustedPath}`
-        // prepend `/api` to relative URL, to proxy to API server.
-        : `/api/${adjustedPath}`;
-}
-
-export function loginFetch(name) {
-    return {
-        type: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-        payload: () => fetch(formatUrl('/login'), {
-            method: 'post',
-            credentials: 'same-origin',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({name})
-        })
-            .then(response => response.json())
-    };
-}
+import { login as loginFetch } from 'actions/auth';
 
 @connect(
   state => ({user: state.auth.user}),
