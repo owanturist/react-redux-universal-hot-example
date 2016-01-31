@@ -4,6 +4,6 @@
  * @param matchedRoutes
  * @returns {Number|null}
  */
-export default (matchedRoutes) => {
-  return matchedRoutes.reduce((prev, cur) => cur.status || prev, null);
-};
+export default function getStatusFromRoutes(matchedRoutes) {
+    return matchedRoutes.reduce((prev, { status = prev }) => status, null);
+}

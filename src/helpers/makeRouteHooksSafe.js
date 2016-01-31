@@ -4,40 +4,40 @@ import { createRoutes } from 'react-router/lib/RouteUtils';
 // the store is initialised. This only happens when doing the first
 // client render of a route that has an onEnter hook
 function makeHooksSafe(routes, store) {
-  if (Array.isArray(routes)) {
-    return routes.map((route) => makeHooksSafe(route, store));
-  }
+    if (Array.isArray(routes)) {
+        return routes.map(route => makeHooksSafe(route, store));
+    }
 
-  const onEnter = routes.onEnter;
+    const { onEnter, childRoutes, indexRoute } = routes;
 
-  if (onEnter) {
-    routes.onEnter = function safeOnEnter(...args) {
-      try {
-        store.getState();
-      } catch (err) {
-        if (onEnter.length === 3) {
-          args[2]();
-        }
+    if (onEnter) {
+        routes.onEnter = function safeOnEnter(...args) {
+            try {
+                store.getState();
+            } catch (err) {
+                if (onEnter.length == 3) {
+                    args[2]();
+                }
 
-        // There's no store yet so ignore the hook
-        return;
-      }
+                // There's no store yet so ignore the hook
+                return;
+            }
 
-      onEnter.apply(null, args);
-    };
-  }
+            onEnter.apply(null, args);
+        };
+    }
 
-  if (routes.childRoutes) {
-    makeHooksSafe(routes.childRoutes, store);
-  }
+    if (childRoutes) {
+        makeHooksSafe(childRoutes, store);
+    }
 
-  if (routes.indexRoute) {
-    makeHooksSafe(routes.indexRoute, store);
-  }
+    if (indexRoute) {
+        makeHooksSafe(indexRoute, store);
+    }
 
-  return routes;
+    return routes;
 }
 
-export default function makeRouteHooksSafe(_getRoutes) {
-  return (store) => makeHooksSafe(createRoutes(_getRoutes(store)), store);
+export default function makeRouteHooksSafe(getRoutes) {
+    return store => makeHooksSafe(createRoutes(getRoutes(store)), store);
 }

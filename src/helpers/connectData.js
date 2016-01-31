@@ -8,16 +8,16 @@ import hoistStatics from 'hoist-non-react-statics';
 */
 
 export default function connectData(fetchData, fetchDataDeferred) {
-  return function wrapWithFetchData(WrappedComponent) {
-    class ConnectData extends Component {
-      render() {
-        return <WrappedComponent {...this.props} />;
-      }
-    }
+    return function wrapWithFetchData(WrappedComponent) {
+        class ConnectData extends Component {
+            static fetchData = fetchData;
+            static fetchDataDeferred = fetchDataDeferred;
 
-    ConnectData.fetchData = fetchData;
-    ConnectData.fetchDataDeferred = fetchDataDeferred;
+            render() {
+                return <WrappedComponent {...this.props} />;
+            }
+        }
 
-    return hoistStatics(ConnectData, WrappedComponent);
-  };
+        return hoistStatics(ConnectData, WrappedComponent);
+    };
 }

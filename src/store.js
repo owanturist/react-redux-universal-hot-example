@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { transitionMiddleware, clientMiddleware } from 'middleware';
+import { transitionMiddleware, thunkMiddleware, promiseMiddleware, clientMiddleware } from 'middleware';
 import reducer from 'reducers';
 import routes from 'routes';
 
@@ -41,6 +41,8 @@ export default (client, data) => {
     const store = compose(
         reduxReactRouter({ getRoutes, createHistory }),
         applyMiddleware(
+            thunkMiddleware,
+            promiseMiddleware,
             clientMiddleware(client),
             transitionMiddleware
         ),
