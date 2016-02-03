@@ -1,15 +1,14 @@
 import fetch from 'isomorphic-fetch';
 import { apiHost, apiPort } from 'config';
 
-export function formatUrl(apiPath = '') {
+export function formatUrl(apiPath = '', isServer = __SERVER__) {
     // remove all matched '/' from the start
     const adjustedPath = apiPath.replace(/^\/*/, '');
+    // prepend host and port of the API server to the path.
+    // prepend `/api` to relative URL, to proxy to API server.
+    const basePath = isServer ? `http://${apiHost}:${apiPort}/` : `/api/`;
 
-    return __SERVER__
-        // prepend host and port of the API server to the path.
-        ? `http://${apiHost}:${apiPort}/${adjustedPath}`
-        // prepend `/api` to relative URL, to proxy to API server.
-        : `/api/${adjustedPath}`;
+    return `${basePath}${adjustedPath}`;
 }
 
 export function checkResponse(response) {
