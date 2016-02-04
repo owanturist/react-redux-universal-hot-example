@@ -11,6 +11,18 @@ export function formatUrl(apiPath = '', isServer = __SERVER__) {
     return `${basePath}${adjustedPath}`;
 }
 
+export function formatParams({ headers, body, ...params } = {}, data = body) {
+    return {
+        credentials: 'same-origin',
+        headers: new Headers({
+            'Content-Type': 'application/json',
+            ...headers
+        }),
+        body: data && JSON.stringify(data),
+        ...params
+    };
+}
+
 export function checkResponse(response) {
     if (response.status < 200 || response.status >= 300) {
         throw response;
@@ -26,16 +38,8 @@ export function failureHandler(response) {
     throw error;
 }
 
-export default function request(url, { body, ...params } = {}, data = body) {
-    const defaults = {
-        credentials: 'same-origin',
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        }),
-        body: data && JSON.stringify(data)
-    };
-
-    return fetch(formatUrl(url), { ...defaults, ...params })
+export default function request(url, params, data) {
+    return fetch(formatUrl(url), formatParams(params, data))
         .then(checkResponse)
         .catch(failureHandler);
 }
