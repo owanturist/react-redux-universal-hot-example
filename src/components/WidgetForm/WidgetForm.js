@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import widgetValidation, { colors } from './widgetValidation';
 import * as widgetActions from 'reducers/widgets';
-import { editStart, editStop } from 'actions/widgets';
+import { editStart, editStop, save } from 'actions/widgets';
 
 @connect(
     state => ({
@@ -11,7 +11,8 @@ import { editStart, editStop } from 'actions/widgets';
     }), {
         ...widgetActions,
         editStart,
-        editStop
+        editStop,
+        save
     }
 )
 @reduxForm({

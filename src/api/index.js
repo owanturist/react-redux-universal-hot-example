@@ -10,5 +10,5 @@ export function loadWidgets() {
 }
 
 export function updateWidget(data) {
-    return request('widget/update', { method: 'post' }, { data });
+    return request('widget/update', { method: 'post' }, data);
 }
