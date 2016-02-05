@@ -101,11 +101,3 @@ export function save(widget) {
         })
     };
 }
-
-export function editStart(id) {
-    return { type: EDIT_START, payload: id };
-}
-
-export function editStop(id) {
-    return { type: EDIT_STOP, payload: id };
-}
