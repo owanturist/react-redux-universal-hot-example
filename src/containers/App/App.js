@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, IndexLink } from 'react-router';
 import DocumentMeta from 'react-document-meta';
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'reducers/info';
+import { isLoaded as isInfoLoaded, load as loadInfo } from 'actions/info';
 import { logout, load as loadAuth, isLoaded as isAuthLoaded } from 'actions/auth';
 import { InfoBar } from 'components';
 import { pushState } from 'redux-router';

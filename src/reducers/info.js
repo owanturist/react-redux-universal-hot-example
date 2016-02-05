@@ -1,6 +1,4 @@
-const LOAD = 'redux-example/LOAD';
-const LOAD_SUCCESS = 'redux-example/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/LOAD_FAIL';
+import { LOAD, LOAD_SUCCESS, LOAD_FAIL } from 'constants/info';
 
 const initialState = {
     loaded: false
@@ -30,15 +28,4 @@ export default function info(state = initialState, { type, payload }) {
         default:
             return state;
     }
-}
-
-export function isLoaded(globalState) {
-    return globalState.info && globalState.info.loaded;
-}
-
-export function load() {
-    return {
-        type: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-        payload: client => client.get('/loadInfo')
-    };
 }
