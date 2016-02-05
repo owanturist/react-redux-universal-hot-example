@@ -26,3 +26,7 @@ export function load() {
         payload: () => api.loadAuth()
     };
 }
+
+export function isLoaded({ auth = {}}) {
+    return auth.loaded;
+}

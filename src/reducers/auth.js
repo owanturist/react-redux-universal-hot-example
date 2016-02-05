@@ -4,7 +4,6 @@ import {
     LOAD, LOAD_SUCCESS, LOAD_FAIL
     } from 'constants/auth';
 
-
 const initialState = {
     loaded: false
 };
@@ -68,8 +67,4 @@ export default function reducer(state = initialState, { type, payload }) {
         default:
             return state;
     }
-}
-
-export function isLoaded(globalState) {
-    return globalState.auth && globalState.auth.loaded;
 }
