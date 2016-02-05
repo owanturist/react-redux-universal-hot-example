@@ -10,5 +10,10 @@ export function loadWidgets() {
 }
 
 export function updateWidget(data) {
-    return request('widget/update', { method: 'post' }, data);
+    return request('widget/update', { method: 'post' }, data)
+        .then(result => {
+            if (result && typeof result.error === 'object') {
+                return Promise.reject(result.error);
+            }
+        });
 }

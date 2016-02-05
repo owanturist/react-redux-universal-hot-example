@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { connect } from 'react-redux';
-import * as widgetActions from 'reducers/widgets';
-import { load as loadWidgets } from 'reducers/widgets';
-import { editStart, editStop, isLoaded } from 'actions/widgets';
+import { editStart, editStop, isLoaded, load as loadWidgets } from 'actions/widgets';
 import { initializeWithKey } from 'redux-form';
 import connectData from 'helpers/connectData';
 import { WidgetForm } from 'components';
@@ -23,10 +21,10 @@ function fetchDataDeferred(getState, dispatch) {
         error: state.widgets.error,
         loading: state.widgets.loading
     }), {
-        ...widgetActions,
         initializeWithKey,
         editStart,
-        editStop
+        editStop,
+        loadWidgets
     }
 )
 export default class Widgets extends Component {
@@ -36,7 +34,7 @@ export default class Widgets extends Component {
         loading: PropTypes.bool,
         initializeWithKey: PropTypes.func.isRequired,
         editing: PropTypes.object.isRequired,
-        load: PropTypes.func.isRequired,
+        loadWidgets: PropTypes.func.isRequired,
         editStart: PropTypes.func.isRequired
     }
 
@@ -45,7 +43,7 @@ export default class Widgets extends Component {
             const {editStart} = this.props; // eslint-disable-line no-shadow
             return () => editStart(String(widget.id));
         };
-        const {widgets, error, editing, loading, load} = this.props;
+        const {widgets, error, editing, loading} = this.props;
         let refreshClassName = 'fa fa-refresh';
         if (loading) {
             refreshClassName += ' fa-spin';
@@ -54,7 +52,7 @@ export default class Widgets extends Component {
             <div className={' container'}>
                 <h1>
                     Widgets
-                    <button className={' btn btn-success'} onClick={load}>
+                    <button className={' btn btn-success'} onClick={this.props.loadWidgets}>
                         <i className={refreshClassName}/> {' '} Reload Widgets
                     </button>
                 </h1>
@@ -72,7 +70,6 @@ export default class Widgets extends Component {
                     <div className="alert alert-danger" role="alert">
                         <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         {' '}
-                        {error}
                     </div>}
                         {widgets && widgets.length &&
                             <table className="table table-striped">

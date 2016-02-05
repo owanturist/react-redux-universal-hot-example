@@ -81,10 +81,3 @@ export default function reducer(state = initialState, { type, payload }) {
             return state;
     }
 }
-
-export function load() {
-    return {
-        type: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-        payload: (client) => client.get('/widget/load/param1/param2') // params not used, just shown as demonstration
-    };
-}
