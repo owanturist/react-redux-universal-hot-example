@@ -1,5 +1,3 @@
-import * as api from 'api';
-
 import {
     LOGIN, LOGIN_SUCCESS, LOGIN_FAIL,
     LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL,
@@ -9,21 +7,21 @@ import {
 export function login(name) {
     return {
         type: [ LOGIN, LOGIN_SUCCESS, LOGIN_FAIL ],
-        payload: () => api.login(name)
+        payload: api => api.login(name)
     };
 }
 
 export function logout() {
     return {
         type: [ LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL ],
-        payload: () => api.logout()
+        payload: api => api.logout()
     };
 }
 
 export function load() {
     return {
         type: [ LOAD, LOAD_SUCCESS, LOAD_FAIL ],
-        payload: () => api.loadAuth()
+        payload: api => api.loadAuth()
     };
 }
 

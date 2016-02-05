@@ -1,5 +1,3 @@
-import * as api from 'api';
-
 import {
     LOAD, LOAD_SUCCESS, LOAD_FAIL,
     SAVE, SAVE_SUCCESS, SAVE_FAIL,
@@ -9,14 +7,14 @@ import {
 export function load() {
     return {
         type: [ LOAD, LOAD_SUCCESS, LOAD_FAIL ],
-        payload: () => api.loadWidgets()
+        payload: api => api.loadWidgets()
     };
 }
 
 export function save(widget) {
     return {
         type: [ SAVE, SAVE_SUCCESS, SAVE_FAIL ],
-        payload: () => api.updateWidget(widget)
+        payload: api => api.updateWidget(widget)
     };
 }
 

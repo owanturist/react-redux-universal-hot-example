@@ -1,30 +1,42 @@
 import request from './request';
 
-export function loadWidgets() {
-    return request('widget/load/param1/param2');
-}
+export default class Api {
+    constructor(req) {
+        this.req = req;
+    }
 
-export function updateWidget(data) {
-    return request('widget/update', { method: 'post' }, data)
-        .then(result => {
-            if (result && typeof result.error === 'object') {
-                return Promise.reject(result.error);
-            }
-        });
-}
+    request(url, params, data) {
+        const cookie = __SERVER__ ? this.req.get('cookie') : null;
 
-export function loadAuth() {
-    return request('loadAuth');
-}
+        return request(url, { ...params, headers: { cookie }}, data);
+    }
 
-export function loadInfo() {
-    return request('loadInfo');
-}
+    login(name) {
+        return this.request('login', { method: 'post' }, { name });
+    }
 
-export function login(name) {
-    return request('login', { method: 'post' }, { name });
-}
+    logout() {
+        return this.request('logout');
+    }
 
-export function logout() {
-    return request('logout');
+    loadAuth() {
+        return this.request('loadAuth');
+    }
+
+    loadInfo() {
+        return this.request('loadInfo');
+    }
+
+    loadWidgets() {
+        return this.request('widget/load/param1/param2');
+    }
+
+    updateWidget(data) {
+        return this.request('widget/update', { method: 'post' }, data)
+            .then(result => {
+                if (result && typeof result.error === 'object') {
+                    return Promise.reject(result.error);
+                }
+            });
+    }
 }
