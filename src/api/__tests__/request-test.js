@@ -32,10 +32,10 @@ describe('api', () => {
     describe('formatParams', () => {
         const DEFAULTS = {
             credentials: 'same-origin',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: undefined
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: null
         };
 
 
@@ -53,10 +53,10 @@ describe('api', () => {
 
             const params = {
                 ...DEFAULTS,
-                headers: new Headers({
-                    'Content-Type': 'application/json',
+                headers: {
+                    'content-type': 'application/json',
                     'Access': '*/*'
-                })
+                }
             };
 
             expect(result).to.deep.equal(params);
@@ -146,10 +146,10 @@ describe('api', () => {
 
             const params = {
                 ...DEFAULTS,
-                headers: new Headers({
-                    'Content-Type': 'application/json',
+                headers: {
+                    'content-type': 'application/json',
                     'Access': '*/*'
-                }),
+                },
                 body: JSON.stringify({
                     bar: 'foo'
                 }),

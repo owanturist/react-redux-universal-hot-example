@@ -1,7 +1,7 @@
-import fetch from 'isomorphic-fetch';
+import 'isomorphic-fetch';
 import { apiHost, apiPort } from 'config';
 
-export function formatUrl(apiPath = '', isServer = __SERVER__) {
+export function formatUrl(apiPath = '', isServer) {
     // remove all matched '/' from the start
     const adjustedPath = apiPath.replace(/^\/*/, '');
     // prepend host and port of the API server to the path.
@@ -11,13 +11,13 @@ export function formatUrl(apiPath = '', isServer = __SERVER__) {
     return `${basePath}${adjustedPath}`;
 }
 
-export function formatParams({ headers, body, ...params } = {}, data = body) {
+export function formatParams({ headers, body = null, ...params } = {}, data = body) {
     return {
         credentials: 'same-origin',
-        headers: new Headers({
-            'Content-Type': 'application/json',
+        headers: {
+            'content-type': 'application/json',
             ...headers
-        }),
+        },
         body: data && JSON.stringify(data),
         ...params
     };
@@ -39,7 +39,7 @@ export function failureHandler(response) {
 }
 
 export default function request(url, params, data) {
-    return fetch(formatUrl(url), formatParams(params, data))
+    return fetch(formatUrl(url, __SERVER__), formatParams(params, data))
         .then(checkResponse)
         .catch(failureHandler);
 }
