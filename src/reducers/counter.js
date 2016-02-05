@@ -1,23 +1,16 @@
-const INCREMENT = 'redux-example/counter/INCREMENT';
+import { INCREMENT } from 'constants/counter';
 
 const initialState = {
-  count: 0
+    count: 0
 };
 
 export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
-    case INCREMENT:
-      const {count} = state;
-      return {
-        count: count + 1
-      };
-    default:
-      return state;
-  }
-}
-
-export function increment() {
-  return {
-    type: INCREMENT
-  };
+    switch (action.type) {
+        case INCREMENT:
+            return {
+                count: state.count + 1
+            };
+        default:
+            return state;
+    }
 }
