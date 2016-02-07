@@ -81,31 +81,3 @@ export default function reducer(state = initialState, { type, payload }) {
             return state;
     }
 }
-
-export function isLoaded(globalState) {
-    return globalState.widgets && globalState.widgets.loaded;
-}
-
-export function load() {
-    return {
-        type: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-        payload: (client) => client.get('/widget/load/param1/param2') // params not used, just shown as demonstration
-    };
-}
-
-export function save(widget) {
-    return {
-        type: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
-        payload: (client) => client.post('/widget/update', {
-            data: widget
-        })
-    };
-}
-
-export function editStart(id) {
-    return { type: EDIT_START, payload: id };
-}
-
-export function editStop(id) {
-    return { type: EDIT_STOP, payload: id };
-}

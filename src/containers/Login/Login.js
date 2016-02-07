@@ -1,12 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
-import * as authActions from 'reducers/auth';
 import config from '../../config';
+
+import { login, logout } from 'actions/auth';
 
 @connect(
   state => ({user: state.auth.user}),
-  authActions)
+  { login, logout })
 export default class Login extends Component {
   static propTypes = {
     user: PropTypes.object,
@@ -34,7 +35,7 @@ export default class Login extends Component {
             <div className="form-group">
               <input type="text" ref="username" placeholder="Enter a username" className="form-control"/>
             </div>
-            <button className="btn btn-success" onClick={this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
+            <button className="btn btn-success" type="submit"><i className="fa fa-sign-in"/>{' '}Log In
             </button>
           </form>
           <p>This will "log you in" as this user, storing the username in the session of the API server.</p>
@@ -45,7 +46,7 @@ export default class Login extends Component {
           <p>You are currently logged in as {user.name}.</p>
 
           <div>
-            <button className="btn btn-danger" onClick={logout}><i className="fa fa-sign-out"/>{' '}Log Out</button>
+            <button onClick={logout} type="button">Log Out fuck</button>
           </div>
         </div>
         }

@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 
-import ApiClient from './helpers/ApiClient';
+import ApiClient from 'api';
 import makeStore from 'store';
 import getRoutes from 'routes';
 

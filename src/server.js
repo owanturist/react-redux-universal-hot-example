@@ -7,7 +7,7 @@ import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
 import makeStore from 'store';
-import ApiClient from './helpers/ApiClient';
+import ApiClient from 'api';
 import { HTML } from 'containers';
 import PrettyError from 'pretty-error';
 import { Server } from 'http';
