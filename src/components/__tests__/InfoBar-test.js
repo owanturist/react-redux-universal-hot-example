@@ -5,7 +5,7 @@ import { expect} from 'chai';
 import { InfoBar } from 'components';
 import { Provider } from 'react-redux';
 import makeStore from 'store';
-import ApiClient from 'helpers/ApiClient';
+import ApiClient from 'api';
 const client = new ApiClient();
 
 describe('InfoBar', () => {
