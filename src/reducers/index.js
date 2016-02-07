@@ -10,15 +10,15 @@ import widgets from './widgets';
 import chat from './chat';
 
 export default combineReducers({
-  router: routerStateReducer,
-  auth,
-  form,
-  chat,
-  multireducer: multireducer({
-    counter1: counter,
-    counter2: counter,
-    counter3: counter
-  }),
-  info,
-  widgets
+    router: routerStateReducer,
+    auth,
+    form,
+    chat,
+    multireducer: multireducer({
+        counter1: counter,
+        counter2: counter,
+        counter3: counter
+    }),
+    info,
+    widgets
 });
